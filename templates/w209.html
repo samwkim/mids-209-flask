@@ -1,6 +1,215 @@
 <!DOCTYPE html>
-<html><head><title>w209 site</title></head>
+<html>
+<head>
+    <title>Dating App Behavior Insights</title>
+
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Inter", sans-serif;
+            background: #fdfdfd;
+            color: #2f2f2f;
+        }
+
+        .hero {
+            padding: 90px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #c7f9cc, #ffd6e0);
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .hero p {
+            font-size: 18px;
+            opacity: 0.85;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: auto;
+            padding: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+            border: 1px solid #f1f1f1;
+        }
+
+        h2 {
+            color: #6bbf8f;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        .pill {
+            display: inline-block;
+            background: #ffe3ec;
+            color: #7a4a5a;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 13px;
+            margin: 5px 5px 0 0;
+        }
+
+        .pill.green {
+            background: #d9fbe5;
+            color: #2f6f4e;
+        }
+
+        /* VISUALIZATION GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .viz-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            min-height: 160px;
+            border: 1px dashed #cbd5e1;
+        }
+
+        .viz-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #4f9d69;
+        }
+
+        .placeholder {
+            color: #9ca3af;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
 <body>
-<h2>Hello World!</h2>
-<img src="{{url_for('static',filename=file)}}"/>
-</body></html>
+
+<!-- HERO -->
+<div class="hero">
+    <h1>Does Different Dating App Behavior Influence Success?</h1>
+    <p>An exploration of behavioral patterns, engagement, and match outcomes 💗🌿</p>
+</div>
+
+<div class="container">
+
+    <!-- OVERVIEW (LEFT TEXT + RIGHT STATS) -->
+<div class="card">
+    <h2>Overview</h2>
+
+    <div style="display: flex; gap: 25px; align-items: flex-start; flex-wrap: wrap;">
+
+        <!-- LEFT: MAIN TEXT -->
+        <div style="flex: 3; min-width: 300px;">
+            <p>
+                We analyzed how user behavior on dating apps relates to outcomes like matches, engagement,
+                and messaging success.
+            </p>
+
+            <p>
+                The dataset captured interaction patterns including swipe behavior,
+                messaging activity, profile engagement, and match outcomes such as ghosting and catfishing.
+            </p>
+
+            <p>
+                Our goal was to understand whether common behaviors (like app usage time, demographic data,
+                or profile content) actually lead to better dating outcomes.
+            </p>
+        </div>
+
+        <!-- RIGHT: SMALL STATS ONLY -->
+        <div style="flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 12px;">
+
+            <div class="card" style="padding: 15px; margin: 0;">
+                <div style="font-weight: 600; color: #4f9d69; font-size: 18px;">
+                    50,000
+                </div>
+                <div style="font-size: 12px; color: #666;">
+                    Synthetic users
+                </div>
+            </div>
+
+            <div class="card" style="padding: 15px; margin: 0;">
+                <div style="font-weight: 600; color: #4f9d69; font-size: 18px;">
+                    19
+                </div>
+                <div style="font-size: 12px; color: #666;">
+                    Behavioral features
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+    <!-- FOCUS 1 -->
+    <div class="card">
+        <h2>Focus 1</h2>
+        <p>Income brackets and demographic effects on match success</p>
+
+        <div>
+            <span class="pill green">Income → match success</span>
+            <span class="pill">Demographics → engagement</span>
+        </div>
+    </div>
+
+    <!-- FOCUS 2 -->
+    <div class="card">
+        <h2>Focus 2</h2>
+        <p>App usage time, messaging behavior, and swipe timing patterns</p>
+
+        <div>
+            <span class="pill green">Usage time → engagement</span>
+            <span class="pill">Message ratio → outcomes</span>
+            <span class="pill green">Swipe timing → match probability</span>
+        </div>
+    </div>
+
+    <!-- FOCUS 3 -->
+    <div class="card">
+        <h2>Focus 3</h2>
+        <p>Profile completeness, photos, likes received, and messaging activity</p>
+
+        <div>
+            <span class="pill green">Profile completeness</span>
+            <span class="pill">Number of photos</span>
+            <span class="pill green">Likes received</span>
+            <span class="pill">Messaging activity</span>
+        </div>
+    </div>
+
+    <!-- FOCUS 4 -->
+    <div class="card">
+        <h2>Focus 4</h2>
+        <p>User interests and behavioral clustering patterns</p>
+
+        <div>
+            <span class="pill green">Interests → match rate</span>
+            <span class="pill">Behavioral clustering</span>
+            <span class="pill green">User types</span>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
