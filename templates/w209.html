@@ -14,6 +14,8 @@
             font-family: "Inter", sans-serif;
             background: #fdfdfd;
             color: #2f2f2f;
+            padding: 0 15px; 
+            box-sizing: border-box;
         }
 
         .hero {
@@ -36,7 +38,7 @@
         .container {
             max-width: 950px;
             margin: auto;
-            padding: 40px;
+            padding: 0px;
         }
 
         .card {
@@ -73,30 +75,52 @@
             color: #2f6f4e;
         }
 
-        /* VISUALIZATION GRID */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
+        /* OVERVIEW LAYOUT */
+        .overview {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
         }
 
-        .viz-card {
-            background: white;
-            border-radius: 16px;
-            padding: 25px;
-            min-height: 160px;
-            border: 1px dashed #cbd5e1;
+        .overview-left {
+            flex: 3;
+            min-width: 300px;
         }
 
-        .viz-title {
+        .overview-right {
+            flex: 1;
+            min-width: 180px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .stat {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 22px;
             font-weight: 600;
-            margin-bottom: 8px;
             color: #4f9d69;
         }
 
-        .placeholder {
-            color: #9ca3af;
-            font-size: 13px;
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* TABLEAU CONTAINER */
+        .viz-wrapper {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            box-sizing: border-box;
+            background: #fafafa;
+            border-radius: 12px;
+
         }
     </style>
 </head>
@@ -111,77 +135,87 @@
 
 <div class="container">
 
-    <!-- OVERVIEW (LEFT TEXT + RIGHT STATS) -->
-<div class="card">
-    <h2>Overview</h2>
+    <!-- OVERVIEW -->
+    <div class="card">
+        <h2>Overview</h2>
 
-    <div style="display: flex; gap: 25px; align-items: flex-start; flex-wrap: wrap;">
+        <div class="overview">
 
-        <!-- LEFT: MAIN TEXT -->
-        <div style="flex: 3; min-width: 300px;">
-            <p>
-                We analyzed how user behavior on dating apps relates to outcomes like matches, engagement,
-                and messaging success.
-            </p>
+            <div class="overview-left">
+                <p>
+                    We analyzed how user behavior on dating apps relates to outcomes like matches,
+                    engagement, and messaging success using a dataset of synthetic users.
+                </p>
 
-            <p>
-                The dataset captured interaction patterns including swipe behavior,
-                messaging activity, profile engagement, and match outcomes such as ghosting and catfishing.
-            </p>
+                <p>
+                    The dataset captures swipe behavior, messaging patterns, profile quality, and interaction outcomes
+                    such as ghosting and catfishing.
+                </p>
 
-            <p>
-                Our goal was to understand whether common behaviors (like app usage time, demographic data,
-                or profile content) actually lead to better dating outcomes.
-            </p>
-        </div>
-
-        <!-- RIGHT: SMALL STATS ONLY -->
-        <div style="flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 12px;">
-
-            <div class="card" style="padding: 15px; margin: 0;">
-                <div style="font-weight: 600; color: #4f9d69; font-size: 18px;">
-                    50,000
-                </div>
-                <div style="font-size: 12px; color: #666;">
-                    Synthetic users
-                </div>
+                <p>
+                    The goal is to test whether common “advantages” like usage time, demographics, or profile completeness
+                    actually lead to better dating success.
+                </p>
             </div>
 
-            <div class="card" style="padding: 15px; margin: 0;">
-                <div style="font-weight: 600; color: #4f9d69; font-size: 18px;">
-                    19
+            <div class="overview-right">
+                <div class="card stat">
+                    <div class="stat-number">50,000</div>
+                    <div class="stat-label">Synthetic users</div>
                 </div>
-                <div style="font-size: 12px; color: #666;">
-                    Behavioral features
+
+                <div class="card stat">
+                    <div class="stat-number">19</div>
+                    <div class="stat-label">Behavioral features</div>
                 </div>
             </div>
 
         </div>
-
     </div>
-</div>
 
     <!-- FOCUS 1 -->
     <div class="card">
         <h2>Focus 1</h2>
         <p>Income brackets and demographic effects on match success</p>
 
-        <div>
-            <span class="pill green">Income → match success</span>
-            <span class="pill">Demographics → engagement</span>
-        </div>
+        <span class="pill green">Income</span>
+        <span class="pill">Demographics</span>
     </div>
 
-    <!-- FOCUS 2 -->
+    <!-- FOCUS 2 (TABLEAU) -->
     <div class="card">
         <h2>Focus 2</h2>
         <p>App usage time, messaging behavior, and swipe timing patterns</p>
 
-        <div>
-            <span class="pill green">Usage time → engagement</span>
-            <span class="pill">Message ratio → outcomes</span>
-            <span class="pill green">Swipe timing → match probability</span>
+        <span class="pill green">Usage time</span>
+        <span class="pill">Message ratio</span>
+        <span class="pill green">Swipe timing</span>
+
+        <div class="viz-wrapper">
+            <div class='tableauPlaceholder' id='tableauViz'>
+                <object class='tableauViz' style='width:100%;'>
+                    <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                    <param name='embed_code_version' value='3' />
+                    <param name='site_root' value='' />
+                    <param name='name' value='EDA_17830364716970/Dashboard1' />
+                    <param name='tabs' value='no' />
+                    <param name='toolbar' value='bottom' />
+                    <param name='showVizHome' value='no' />
+                </object>
+            </div>
         </div>
+
+        <script type='text/javascript'>
+            var divElement = document.getElementById('tableauViz');
+            var vizElement = divElement.getElementsByTagName('object')[0];
+
+            vizElement.style.width = '100%';
+            vizElement.style.height = Math.max(600, window.innerHeight * 0.75) + "px";
+
+            var scriptElement = document.createElement('script');
+            scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+            vizElement.parentNode.insertBefore(scriptElement, vizElement);
+        </script>
     </div>
 
     <!-- FOCUS 3 -->
@@ -189,12 +223,10 @@
         <h2>Focus 3</h2>
         <p>Profile completeness, photos, likes received, and messaging activity</p>
 
-        <div>
-            <span class="pill green">Profile completeness</span>
-            <span class="pill">Number of photos</span>
-            <span class="pill green">Likes received</span>
-            <span class="pill">Messaging activity</span>
-        </div>
+        <span class="pill green">Profile completeness</span>
+        <span class="pill">Photos</span>
+        <span class="pill green">Likes received</span>
+        <span class="pill">Messaging activity</span>
     </div>
 
     <!-- FOCUS 4 -->
@@ -202,11 +234,9 @@
         <h2>Focus 4</h2>
         <p>User interests and behavioral clustering patterns</p>
 
-        <div>
-            <span class="pill green">Interests → match rate</span>
-            <span class="pill">Behavioral clustering</span>
-            <span class="pill green">User types</span>
-        </div>
+        <span class="pill green">Interests</span>
+        <span class="pill">Behavioral clustering</span>
+        <span class="pill green">User types</span>
     </div>
 
 </div>
