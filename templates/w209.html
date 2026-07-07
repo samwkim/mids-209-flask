@@ -1,245 +1,316 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Dating App Behavior Insights</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Match-Rate Illusion | Dating App Behavior</title>
 
-    <!-- FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <style>
-        body {
-            margin: 0;
-            font-family: "Inter", sans-serif;
-            background: #fdfdfd;
-            color: #2f2f2f;
-            padding: 0 15px; 
-            box-sizing: border-box;
-        }
+<!-- Tableau Embedding API (keeps embedded vizzes interactive) -->
+<script type="module"
+  src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
 
-        .hero {
-            padding: 90px 40px;
-            text-align: center;
-            background: linear-gradient(135deg, #c7f9cc, #ffd6e0);
-        }
+<style>
+:root{
+  --green:#3d8b62; --green-deep:#1f5c3d; --green-soft:#d9fbe5;
+  --pink:#c06b86; --pink-soft:#ffe3ec;
+  --ink:#2f2f2f; --muted:#6b7280; --line:#eef0f2; --bg:#fdfdfd;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;font-family:"Inter",sans-serif;background:var(--bg);color:var(--ink);}
 
-        .hero h1 {
-            font-size: 40px;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
+#progress{position:fixed;top:0;left:0;height:4px;width:0;z-index:50;
+  background:linear-gradient(90deg,#6bbf8f,#c06b86);transition:width .1s;}
 
-        .hero p {
-            font-size: 18px;
-            opacity: 0.85;
-        }
+.section{max-width:1080px;margin:0 auto;padding:90px 32px;}
+.badge{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--pink);margin-bottom:12px;}
+h2{font-size:30px;font-weight:700;margin:0 0 14px;line-height:1.2;}
+.lede{font-size:18px;color:#444;line-height:1.65;max-width:840px;}
+.muted{color:var(--muted);}
 
-        .container {
-            max-width: 950px;
-            margin: auto;
-            padding: 0px;
-        }
+.reveal{opacity:0;transform:translateY(34px);
+  transition:opacity .8s ease,transform .8s ease;}
+.reveal.in{opacity:1;transform:none;}
+.reveal.d1{transition-delay:.12s;} .reveal.d2{transition-delay:.24s;} .reveal.d3{transition-delay:.36s;}
 
-        .card {
-            background: white;
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-            border: 1px solid #f1f1f1;
-        }
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  align-items:center;text-align:center;padding:40px 32px;
+  background:linear-gradient(135deg,#c7f9cc,#ffd6e0);}
+.hero h1{font-size:52px;font-weight:800;max-width:820px;margin:0 0 20px;line-height:1.12;}
+.hero p{font-size:20px;max-width:600px;color:#37493f;line-height:1.55;margin:0;}
+.scroll-cue{margin-top:56px;font-size:13px;color:#4a6b56;letter-spacing:.05em;}
+.scroll-cue span{display:block;font-size:26px;margin-top:6px;animation:bob 1.6s infinite;}
+@keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
 
-        h2 {
-            color: #6bbf8f;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;
+  padding:28px;box-shadow:0 10px 30px rgba(0,0,0,.05);}
+.viz{width:100%;min-height:540px;border-radius:14px;overflow:hidden;background:#fbfbfb;
+  border:1px dashed #cbd5e1;display:flex;align-items:center;justify-content:center;margin-top:8px;}
+.viz.filled{border:1px solid var(--line);min-height:auto;}
+.viz .ph{color:#9ca3af;font-size:13px;text-align:center;padding:24px;}
+.caption{font-size:13px;color:var(--muted);margin-top:10px;}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:720px){.two{grid-template-columns:1fr;} .hero h1{font-size:38px;} h2{font-size:25px;}}
 
-        p {
-            line-height: 1.6;
-        }
+.flat{display:inline-block;background:#eef2f6;color:#516072;font-size:13px;font-weight:600;
+  padding:6px 12px;border-radius:999px;margin-top:16px;}
+.takeaway{background:var(--green-soft);border-left:4px solid var(--green);
+  padding:16px 20px;border-radius:0 12px 12px 0;margin-top:18px;font-size:15px;}
+.takeaway strong{color:var(--green-deep);}
+.turn{background:var(--pink-soft);border-left:4px solid var(--pink);
+  padding:16px 20px;border-radius:0 12px 12px 0;margin-top:18px;font-size:15px;}
+.turn strong{color:#a24a68;}
 
-        .pill {
-            display: inline-block;
-            background: #ffe3ec;
-            color: #7a4a5a;
-            padding: 8px 12px;
-            border-radius: 999px;
-            font-size: 13px;
-            margin: 5px 5px 0 0;
-        }
+.stats{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;}
+.stat{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;}
+.stat .n{font-size:26px;font-weight:800;color:var(--green);}
+.stat .l{font-size:12.5px;color:#666;margin-top:2px;}
 
-        .pill.green {
-            background: #d9fbe5;
-            color: #2f6f4e;
-        }
+.bars{margin-top:10px;}
+.bar-row{display:grid;grid-template-columns:130px 1fr 52px;align-items:center;gap:10px;margin:7px 0;}
+.bar-row .lab{font-size:13px;color:#444;text-align:right;}
+.bar-track{background:#f0f2f4;border-radius:999px;height:16px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#8fd6ab,#3d8b62);}
+.bar-row .val{font-size:12.5px;color:var(--muted);}
 
-        /* OVERVIEW LAYOUT */
-        .overview {
-            display: flex;
-            gap: 25px;
-            flex-wrap: wrap;
-        }
+.reveal-img{width:100%;border-radius:14px;border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.06);margin-top:8px;}
+.big-quote{font-size:24px;font-weight:700;line-height:1.35;color:var(--green-deep);max-width:720px;margin:0 auto 10px;}
 
-        .overview-left {
-            flex: 3;
-            min-width: 300px;
-        }
+.step{font-size:16px;color:#444;line-height:1.65;max-width:840px;margin:0;}
+.step.top{margin-bottom:6px;} .step.mid{margin:22px 0 6px;}
 
-        .overview-right {
-            flex: 1;
-            min-width: 180px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .stat {
-            padding: 15px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 22px;
-            font-weight: 600;
-            color: #4f9d69;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-        }
-
-        /* TABLEAU CONTAINER */
-        .viz-wrapper {
-            margin-top: 20px;
-            width: 100%;
-            max-width: 100%;
-            margin: 0 auto;
-            box-sizing: border-box;
-            background: #fafafa;
-            border-radius: 12px;
-
-        }
-    </style>
+footer{background:#fafbfa;border-top:1px solid var(--line);padding:40px 32px;
+  text-align:center;color:var(--muted);font-size:13.5px;line-height:1.7;}
+footer b{color:var(--ink);}
+</style>
 </head>
-
 <body>
 
-<!-- HERO -->
-<div class="hero">
-    <h1>Does Different Dating App Behavior Influence Success?</h1>
-    <p>An exploration of behavioral patterns, engagement, and match outcomes 💗🌿</p>
-</div>
+<div id="progress"></div>
 
-<div class="container">
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <h1>What actually makes someone succeed on a dating app?</h1>
+  <p>We looked at 50,000 users, from how often they swipe to what their profiles say, to find out
+     what really turns attention into matches.</p>
+  <div class="scroll-cue">SCROLL TO FIND OUT<span>&#8595;</span></div>
+</header>
 
-    <!-- OVERVIEW -->
-    <div class="card">
-        <h2>Overview</h2>
+<!-- ================= 1 · MEET THE DATA ================= -->
+<section class="section">
+  <div class="reveal"><div class="badge">01 · Meet the data</div>
+    <h2>Fifty thousand users, one question</h2>
+    <p class="lede">The Kaggle Dating App Behavior dataset tells us who each user is and how they
+      behave. We measure success with the <strong>match rate</strong>, which is mutual matches
+      divided by likes received. It captures how well someone turns attention into actual matches.</p>
+  </div>
 
-        <div class="overview">
+  <div class="reveal d1" style="margin-top:26px;">
+    <div class="stats">
+      <div class="stat"><div class="n">50,000</div><div class="l">users</div></div>
+      <div class="stat"><div class="n">21.7%</div><div class="l">avg. match rate</div></div>
+      <div class="stat"><div class="n">~14</div><div class="l">avg. mutual matches</div></div>
+      <div class="stat"><div class="n">49</div><div class="l">interests listed</div></div>
+    </div>
+  </div>
 
-            <div class="overview-left">
-                <p>
-                    We analyzed how user behavior on dating apps relates to outcomes like matches,
-                    engagement, and messaging success using a dataset of synthetic users.
-                </p>
+  <div class="reveal d2 card" style="margin-top:22px;">
+    <div class="muted" style="font-weight:600;margin-bottom:6px;">Who's in the data (age groups)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="lab">25–34</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="val">23.9%</div></div>
+      <div class="bar-row"><div class="lab">45–54</div><div class="bar-track"><div class="bar-fill" style="width:99%"></div></div><div class="val">23.7%</div></div>
+      <div class="bar-row"><div class="lab">35–44</div><div class="bar-track"><div class="bar-fill" style="width:99%"></div></div><div class="val">23.7%</div></div>
+      <div class="bar-row"><div class="lab">18–24</div><div class="bar-track"><div class="bar-fill" style="width:70%"></div></div><div class="val">16.7%</div></div>
+      <div class="bar-row"><div class="lab">55+</div><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div><div class="val">12.0%</div></div>
+    </div>
+    <div class="caption">Income brackets, genders, and relationship intents are split almost evenly
+      too. That flat spread is the first hint that this population is unusually uniform.</div>
+  </div>
+</section>
 
-                <p>
-                    The dataset captures swipe behavior, messaging patterns, profile quality, and interaction outcomes
-                    such as ghosting and catfishing.
-                </p>
+<!-- ================= 2 · THE HUNT ================= -->
+<section class="section">
+  <div class="reveal"><div class="badge">02 · The hunt</div>
+    <h2>We tested four things everyone believes help</h2>
+    <p class="lede">People have plenty of theories about what helps you match. Be more active. Earn
+      more. Fill out your profile. List the right interests. We tested all four, and here is what
+      happened.</p>
+  </div>
+</section>
 
-                <p>
-                    The goal is to test whether common “advantages” like usage time, demographics, or profile completeness
-                    actually lead to better dating success.
-                </p>
-            </div>
+<!-- Advantage 1 -->
+<section class="section" style="padding-top:20px;">
+  <div class="reveal card">
+    <div class="badge">Advantage 1 · App usage · Chelsea Fan</div>
+    <h2 style="font-size:23px;">Does more time on the app mean more matches?</h2>
+    <p class="step top">The thinking is simple: the more you swipe, the more chances you get, so heavy
+      users should match more. We compared match rate across usage levels, from light users to the
+      most active.</p>
+    <div class="viz">
+      <tableau-viz src="https://public.tableau.com/views/REPLACE_WORKBOOK/H1_usage"
+        toolbar="bottom" hide-tabs style="width:100%;height:520px;"></tableau-viz>
+      <div class="ph">Match rate by usage bucket (paste Tableau Public URL)</div>
+    </div>
+    <span class="flat">Result: flat · ~21–22% across every usage tier</span>
+  </div>
+</section>
 
-            <div class="overview-right">
-                <div class="card stat">
-                    <div class="stat-number">50,000</div>
-                    <div class="stat-label">Synthetic users</div>
-                </div>
+<!-- Advantage 2 -->
+<section class="section" style="padding-top:20px;">
+  <div class="reveal card">
+    <div class="badge">Advantage 2 · Income · Curtis Chau</div>
+    <h2 style="font-size:23px;">Do higher-income users match more?</h2>
+    <p class="step top">A common assumption is that higher income signals status and gives you an
+      edge. We broke match rate down by income bracket, then split it by gender to check for any
+      hidden differences.</p>
+    <div class="viz">
+      <tableau-viz src="https://public.tableau.com/views/REPLACE_WORKBOOK/H2_income"
+        toolbar="bottom" hide-tabs style="width:100%;height:520px;"></tableau-viz>
+      <div class="ph">Income × gender heatmap (paste Tableau Public URL)</div>
+    </div>
+    <span class="flat">Result: flat · no clear income trend</span>
+  </div>
+</section>
 
-                <div class="card stat">
-                    <div class="stat-number">19</div>
-                    <div class="stat-label">Behavioral features</div>
-                </div>
-            </div>
+<!-- Advantage 3 -->
+<section class="section" style="padding-top:20px;">
+  <div class="reveal card">
+    <div class="badge">Advantage 3 · Profile completeness · Chris White</div>
+    <h2 style="font-size:23px;">Do more photos and longer bios win more attention?</h2>
+    <p class="step top">Every app tells you to add more photos and write a fuller bio. We tested
+      whether a more complete profile actually earns more likes and a better match rate.</p>
+    <div class="two">
+      <div class="viz"><tableau-viz src="https://public.tableau.com/views/REPLACE_WORKBOOK/H3_pics"
+        toolbar="bottom" hide-tabs style="width:100%;height:460px;"></tableau-viz>
+        <div class="ph">Likes by photo count</div></div>
+      <div class="viz"><tableau-viz src="https://public.tableau.com/views/REPLACE_WORKBOOK/H3_bio"
+        toolbar="bottom" hide-tabs style="width:100%;height:460px;"></tableau-viz>
+        <div class="ph">Likes by bio length</div></div>
+    </div>
+    <span class="flat">Result: flat · likes hover near 100 regardless</span>
+  </div>
+</section>
 
-        </div>
+<!-- Advantage 4 · Interests (stacked, with step-by-step prose) -->
+<section class="section" style="padding-top:20px;">
+  <div class="reveal card">
+    <div class="badge">Advantage 4 · Interests · Sam Kim</div>
+    <h2 style="font-size:23px;">Do a user's interests predict how well they match?</h2>
+    <p class="step top">The last theory is that your interests say something about how well you'll
+      match, that certain hobbies simply do better than others. We started by ranking all 49 interests
+      by their average match rate.</p>
+
+    <div class="viz filled" style="margin-top:14px;">
+      <tableau-viz src="https://public.tableau.com/views/ExploratoryDataAnalysis_17833753043410/Visual1"
+        toolbar="bottom" hide-tabs style="width:100%;height:560px;"></tableau-viz>
     </div>
 
-    <!-- FOCUS 1 -->
-    <div class="card">
-        <h2>Focus 1</h2>
-        <p>Income brackets and demographic effects on match success</p>
+    <p class="step mid">At first glance this looks like a real ranking, with Stand-up Comedy on top and
+      the rest sliding down from there. But look at the numbers: the whole list sits between about 21%
+      and 23%, so the gaps are tiny.</p>
+    <p class="step">To make the comparison easier to read, we grouped the 49 interests into 7 broader
+      categories like Arts &amp; Creative and Sports &amp; Outdoors. Each group holds thousands of
+      users, which makes the averages more stable, and then we plotted the full distribution for each
+      one instead of a single average.</p>
 
-        <span class="pill green">Income</span>
-        <span class="pill">Demographics</span>
+    <div class="viz filled" style="margin-top:14px;">
+      <tableau-viz src="https://public.tableau.com/views/ExploratoryDataAnalysis_17833753043410/Sheet3"
+        toolbar="bottom" hide-tabs style="width:100%;height:560px;"></tableau-viz>
     </div>
 
-    <!-- FOCUS 2 (TABLEAU) -->
-    <div class="card">
-        <h2>Focus 2</h2>
-        <p>App usage time, messaging behavior, and swipe timing patterns</p>
+    <p class="step mid">Every category lands right on the overall average, and the spread inside each
+      group runs almost the entire range. The interest a user lists barely moves their match rate.</p>
+    <span class="flat">Result: flat · every category lands on 21.7%</span>
+  </div>
+</section>
 
-        <span class="pill green">Usage time</span>
-        <span class="pill">Message ratio</span>
-        <span class="pill green">Swipe timing</span>
+<!-- Tension beat -->
+<section class="section" style="text-align:center;">
+  <div class="reveal">
+    <p class="big-quote">Four different "advantages." Four flat lines.<br>So why does <em>nothing</em> move it?</p>
+  </div>
+</section>
 
-        <div class="viz-wrapper">
-            <div class='tableauPlaceholder' id='tableauViz'>
-                <object class='tableauViz' style='width:100%;'>
-                    <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
-                    <param name='embed_code_version' value='3' />
-                    <param name='site_root' value='' />
-                    <param name='name' value='EDA_17830364716970/Dashboard1' />
-                    <param name='tabs' value='no' />
-                    <param name='toolbar' value='bottom' />
-                    <param name='showVizHome' value='no' />
-                </object>
-            </div>
-        </div>
+<!-- ================= 3 · THE REVEAL ================= -->
+<section class="section">
+  <div class="reveal"><div class="badge" style="color:var(--green);">03 · The reveal</div>
+    <h2>Match rate isn't measuring success. It's measuring its denominator.</h2>
+    <p class="lede">For the 90% of users who receive at least 20 likes, the number of actual matches
+      barely moves. It hovers around 15 whether they got 30 likes or 190. Since match rate divides
+      matches by likes, that makes it almost entirely a story about the denominator. Get few likes
+      and your match rate looks high. Get a lot and it looks low, even though you matched with just as
+      many people.</p>
+  </div>
+  <div class="reveal d1" style="margin-top:22px;">
+    <img class="reveal-img" src="/static/match_rate_illusion.png"
+         alt="Match rate falls sharply as likes rise, while mutual matches stay flat">
+    <div class="caption">On the left, match rate falls from about 50% down to 8% as likes go up. On
+      the right, the number of actual matches stays flat once users get past the smallest tier (the
+      lowest group is capped only because you can't match with more people than liked you). The metric
+      rewards being unpopular.</div>
+  </div>
+</section>
 
-        <script type='text/javascript'>
-            var divElement = document.getElementById('tableauViz');
-            var vizElement = divElement.getElementsByTagName('object')[0];
+<!-- ================= 4 · THE LESSON ================= -->
+<section class="section">
+  <div class="reveal"><div class="badge">04 · What it means</div>
+    <h2>A caution for anyone who builds with metrics</h2>
+    <p class="lede">A product manager who optimizes for match rate would be pushing users toward
+      getting <em>fewer</em> likes, which is exactly backwards. The honest way to measure success is
+      raw match count, or the full swipe to like to match funnel. By those measures, nothing in this
+      data predicts who succeeds.</p>
+    <div class="turn"><strong>Takeaway for PMs:</strong> ratio metrics can quietly flip your
+      incentives. Before you optimize one, check whether it is tracking the outcome you actually care
+      about, or just its denominator.</div>
+  </div>
+</section>
 
-            vizElement.style.width = '100%';
-            vizElement.style.height = Math.max(600, window.innerHeight * 0.75) + "px";
+<!-- ================= 5 · ABOUT ================= -->
+<section class="section">
+  <div class="reveal"><div class="badge">05 · About this project</div>
+    <h2>Goals, tools and team</h2>
+    <p class="lede"><strong>Goal:</strong> help a dating-app product manager see which user traits
+      drive matching success, and understand why the obvious success metric is misleading.
+      <strong>Audience:</strong> dating-app product managers. <strong>Data:</strong> the Kaggle
+      Dating App Behavior dataset, covering 50,000 synthetic users.</p>
+    <div class="takeaway"><strong>Tools:</strong> we built the analysis and charts in Tableau,
+      published them to Tableau Public, and embedded them here with the Tableau Embedding API. The
+      site runs on Flask and is hosted on Vercel. We chose Tableau because it let us iterate quickly
+      and add cohort filters without writing code.</div>
+    <div class="takeaway"><strong>Iteration:</strong> we refined the interest view from 49 cramped
+      bars down to 7 readable categories, fixed axes that made tiny differences look big, and most
+      importantly, shifted the whole project from "which advantage wins" to exposing the match-rate
+      illusion once the data pointed us there.</div>
+    <div class="takeaway"><strong>A note on the data:</strong> this is a synthetic dataset, so the
+      demographic and behavioral features are uniform by design and carry no real signal. That is
+      why every "advantage" comes out flat. We treat the project as a working scaffold: the same
+      views and pipeline would surface real differences if pointed at live data, while the match-rate
+      illusion is a structural point about the metric that holds either way.</div>
+  </div>
+</section>
 
-            var scriptElement = document.createElement('script');
-            scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-            vizElement.parentNode.insertBefore(scriptElement, vizElement);
-        </script>
-    </div>
+<footer>
+  <b>DATASCI 209 · Summer 2026 · Group C</b><br>
+  Chelsea Fan · Curtis Chau · Sam Kim · Chris White<br>
+  Data: Kaggle "Dating App Behavior" dataset · Feedback: samkim1125@gmail.com
+</footer>
 
-    <!-- FOCUS 3 -->
-    <div class="card">
-        <h2>Focus 3</h2>
-        <p>Profile completeness, photos, likes received, and messaging activity</p>
-
-        <span class="pill green">Profile completeness</span>
-        <span class="pill">Photos</span>
-        <span class="pill green">Likes received</span>
-        <span class="pill">Messaging activity</span>
-    </div>
-
-    <!-- FOCUS 4 -->
-    <div class="card">
-        <h2>Focus 4</h2>
-        <p>User interests and behavioral clustering patterns</p>
-
-        <span class="pill green">Interests</span>
-        <span class="pill">Behavioral clustering</span>
-        <span class="pill green">User types</span>
-    </div>
-
-</div>
-
+<script>
+const prog=document.getElementById('progress');
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  prog.style.width=pct+'%';
+});
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
 </body>
 </html>
