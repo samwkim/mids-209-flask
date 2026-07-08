@@ -163,15 +163,45 @@ footer b{color:var(--ink);}
 <section class="section" style="padding-top:20px;">
   <div class="reveal card">
     <div class="badge">Advantage 2 · Income · Curtis Chau</div>
+
     <h2 style="font-size:23px;">Do higher-income users match more?</h2>
-    <p class="step top">A common assumption is that higher income signals status and gives you an
-      edge. We broke match rate down by income bracket, then split it by gender to check for any
-      hidden differences.</p>
-    <div class="viz">
-      <tableau-viz src="https://public.tableau.com/views/REPLACE_WORKBOOK/H2_income"
-        toolbar="bottom" hide-tabs style="width:100%;height:520px;"></tableau-viz>
-      <div class="ph">Income × gender heatmap (paste Tableau Public URL)</div>
+
+    <p class="step top">
+      A common assumption is that higher income signals status and gives you an edge.
+      We broke match rate down by income bracket, then split it by gender to check for
+      any hidden differences.
+    </p>
+
+    <!-- Visualization 1: Income vs Match Rate -->
+    <div class="viz filled">
+      <tableau-viz
+        src="https://public.tableau.com/app/profile/curtis.chau/viz/Datasci209Final_Vis1/IncomevsMatchRate?publish=yes"
+        toolbar="bottom"
+        hide-tabs
+        style="width:100%;height:520px;">
+      </tableau-viz>
     </div>
+
+    <!-- Visualization 2: Income vs Match Rate by Gender -->
+    <div class="viz filled" style="margin-top:18px;">
+      <tableau-viz
+        src="https://public.tableau.com/app/profile/curtis.chau/viz/Datasci209Final_Vis2/IncomevsMatchRateGender?publish=yes"
+        toolbar="bottom"
+        hide-tabs
+        style="width:100%;height:520px;">
+      </tableau-viz>
+    </div>
+
+    <!-- Visualization 3: Income vs Match Rate Heatmap -->
+    <div class="viz filled" style="margin-top:18px;">
+      <tableau-viz
+        src="https://public.tableau.com/app/profile/curtis.chau/viz/Datasci209Final_Vis3/IncomevsMatchRateHeatmap?publish=yes"
+        toolbar="bottom"
+        hide-tabs
+        style="width:100%;height:520px;">
+      </tableau-viz>
+    </div>
+
     <span class="flat">Result: flat · no clear income trend</span>
   </div>
 </section>
