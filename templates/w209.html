@@ -241,18 +241,26 @@ footer b{color:var(--ink);}
 <section class="section" style="padding-top:20px;">
   <div class="reveal card">
     <div class="badge">Advantage 3 · Profile completeness · Chris White</div>
+
     <h2 style="font-size:23px;">Do more photos and longer bios win more attention?</h2>
-    <p class="step top">Every app tells you to add more photos and write a fuller bio. We tested
-      whether a more complete profile actually earns more likes and a better match rate.</p>
-    <div class="two">
-      <div class="viz"><tableau-viz src="https://public.tableau.com/views/REPLACE_WORKBOOK/H3_pics"
-        toolbar="bottom" hide-tabs style="width:100%;height:460px;"></tableau-viz>
-        <div class="ph">Likes by photo count</div></div>
-      <div class="viz"><tableau-viz src="https://public.tableau.com/views/REPLACE_WORKBOOK/H3_bio"
-        toolbar="bottom" hide-tabs style="width:100%;height:460px;"></tableau-viz>
-        <div class="ph">Likes by bio length</div></div>
+
+    <p class="step top">
+      Every app tells you to add more photos and write a fuller bio. We tested
+      whether a more complete profile actually earns more likes and a better match rate.
+    </p>
+
+    <div class="viz">
+      <tableau-viz 
+        src="https://public.tableau.com/views/EDA_17836143198120/Dashboard2"
+        toolbar="bottom"
+        hide-tabs
+        style="width:100%; height:700px;">
+      </tableau-viz>
     </div>
-    <span class="flat">Result: flat · likes hover near 100 regardless</span>
+
+    <span class="flat">
+      Result: mostly flat · profile completeness alone does not strongly increase match rate
+    </span>
   </div>
 </section>
 
