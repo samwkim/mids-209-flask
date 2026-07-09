@@ -20,13 +20,15 @@
   --ink:#2f2f2f; --muted:#6b7280; --line:#eef0f2; --bg:#fdfdfd;
 }
 *{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth;scroll-snap-type:y proximity;}
 body{margin:0;font-family:"Inter",sans-serif;background:var(--bg);color:var(--ink);}
 
 #progress{position:fixed;top:0;left:0;height:4px;width:0;z-index:50;
   background:linear-gradient(90deg,#6bbf8f,#c06b86);transition:width .1s;}
 
 .section{max-width:1080px;margin:0 auto;padding:90px 32px;}
+.snap-page{min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  scroll-snap-align:start;scroll-snap-stop:always;padding-top:48px;padding-bottom:48px;}
 .badge{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:var(--pink);margin-bottom:12px;}
 h2{font-size:30px;font-weight:700;margin:0 0 14px;line-height:1.2;}
@@ -40,6 +42,7 @@ h2{font-size:30px;font-weight:700;margin:0 0 14px;line-height:1.2;}
 
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;
   align-items:center;text-align:center;padding:40px 32px;position:relative;overflow:hidden;
+  scroll-snap-align:start;scroll-snap-stop:always;
   background:linear-gradient(135deg,#c7f9cc,#ffd6e0);}
 .hero h1,.hero p,.hero .scroll-cue{position:relative;z-index:2;}
 .hero h1{font-size:52px;font-weight:800;max-width:820px;margin:0 0 20px;line-height:1.12;}
@@ -131,7 +134,7 @@ footer b{color:var(--ink);}
 </header>
 
 <!-- ================= 1 · MEET THE DATA ================= -->
-<section class="section">
+<section class="section snap-page">
   <div class="reveal"><div class="badge">01 · Meet the data</div>
     <h2>Fifty thousand users, one question</h2>
     <p class="lede">The Kaggle Dating App Behavior dataset tells us who each user is and how they
@@ -296,20 +299,21 @@ footer b{color:var(--ink);}
 <!-- ================= 3 · THE REVEAL ================= -->
 <section class="section">
   <div class="reveal"><div class="badge" style="color:var(--green);">03 · The reveal</div>
-    <h2>Match rate isn't measuring success. It's measuring its denominator.</h2>
-    <p class="lede">For the 90% of users who receive at least 20 likes, the number of actual matches
-      barely moves. It hovers around 15 whether they got 30 likes or 190. Since match rate divides
-      matches by likes, that makes it almost entirely a story about the denominator. Get few likes
-      and your match rate looks high. Get a lot and it looks low, even though you matched with just as
-      many people.</p>
+    <h2>Match rate says more about your likes than your success</h2>
+    <p class="lede">Here is the catch. Almost everyone ends up with about the same number of matches,
+      around 15, no matter how many likes they get. So your match rate really just comes down to how
+      many likes you received. If only a few people liked you, those matches look like a huge success
+      rate. If hundreds liked you, the exact same matches look like a low one, even though you matched
+      with just as many people. In other words, getting fewer likes actually makes your match rate
+      look better, which is backwards.</p>
   </div>
   <div class="reveal d1" style="margin-top:22px;">
     <img class="reveal-img" src="/static/match_rate_illusion.png"
          alt="Match rate falls sharply as likes rise, while mutual matches stay flat">
     <div class="caption">On the left, match rate falls from about 50% down to 8% as likes go up. On
-      the right, the number of actual matches stays flat once users get past the smallest tier (the
-      lowest group is capped only because you can't match with more people than liked you). The metric
-      rewards being unpopular.</div>
+      the right, the actual number of matches stays about the same. So a lower match rate usually just
+      means someone got more likes, not that they did worse. (The very first group is low only because
+      you can't match with more people than liked you.)</div>
   </div>
 </section>
 
@@ -318,42 +322,19 @@ footer b{color:var(--ink);}
   <div class="reveal"><div class="badge">04 · What it means</div>
     <h2>A caution for anyone who builds with metrics</h2>
     <p class="lede">A product manager who optimizes for match rate would be pushing users toward
-      getting <em>fewer</em> likes, which is exactly backwards. The honest way to measure success is
-      raw match count, or the full swipe to like to match funnel. By those measures, nothing in this
-      data predicts who succeeds.</p>
-    <div class="turn"><strong>Takeaway for PMs:</strong> ratio metrics can quietly flip your
-      incentives. Before you optimize one, check whether it is tracking the outcome you actually care
-      about, or just its denominator.</div>
-  </div>
-</section>
-
-<!-- ================= 5 · ABOUT ================= -->
-<section class="section">
-  <div class="reveal"><div class="badge">05 · About this project</div>
-    <h2>Goals, tools and team</h2>
-    <p class="lede"><strong>Goal:</strong> help a dating-app product manager see which user traits
-      drive matching success, and understand why the obvious success metric is misleading.
-      <strong>Audience:</strong> dating-app product managers. <strong>Data:</strong> the Kaggle
-      Dating App Behavior dataset, covering 50,000 synthetic users.</p>
-    <div class="takeaway"><strong>Tools:</strong> we built the analysis and charts in Tableau,
-      published them to Tableau Public, and embedded them here with the Tableau Embedding API. The
-      site runs on Flask and is hosted on Vercel. We chose Tableau because it let us iterate quickly
-      and add cohort filters without writing code.</div>
-    <div class="takeaway"><strong>Iteration:</strong> we refined the interest view from 49 cramped
-      bars down to 7 readable categories, fixed axes that made tiny differences look big, and most
-      importantly, shifted the whole project from "which advantage wins" to exposing the match-rate
-      illusion once the data pointed us there.</div>
-    <div class="takeaway"><strong>A note on the data:</strong> this is a synthetic dataset, so the
-      demographic and behavioral features are uniform by design and carry no real signal. That is
-      why every "advantage" comes out flat. We treat the project as a working scaffold: the same
-      views and pipeline would surface real differences if pointed at live data, while the match-rate
-      illusion is a structural point about the metric that holds either way.</div>
+      getting <em>fewer</em> likes, which is exactly backwards. So match rate probably is not a metric
+      to trust on its own. As a next step, we want to look into other measures of success, like the
+      raw number of matches or the full swipe-to-like-to-match funnel, and test whether any of them
+      tell a clearer story than match rate does.</p>
+    <div class="turn"><strong>Takeaway for PMs:</strong> a metric can quietly point you the wrong way.
+      Before you optimize for one, make sure it is really tracking the success you care about.</div>
   </div>
 </section>
 
 <footer>
   <b>DATASCI 209 · Summer 2026 · Group C</b><br>
   Chelsea Fan · Curtis Chau · Sam Kim · Chris White<br>
+  Built for dating-app product managers, to see which user behaviors actually drive matches.<br>
   Data: Kaggle "Dating App Behavior" dataset · Feedback: samkim1125@gmail.com
 </footer>
 
