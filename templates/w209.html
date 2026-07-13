@@ -91,7 +91,12 @@ h2{font-size:30px;font-weight:700;margin:0 0 14px;line-height:1.2;}
 .bar-row .val{font-size:12.5px;color:var(--muted);}
 
 .reveal-img{width:100%;border-radius:14px;border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.06);margin-top:8px;}
-.big-quote{font-size:24px;font-weight:700;line-height:1.35;color:var(--green-deep);max-width:720px;margin:0 auto 10px;}
+.big-quote{font-size:34px;font-weight:750;line-height:1.35;color:#3d8b62;margin:0;}
+.insight-card{background:linear-gradient(135deg,#c7f9cc,#ffd6e0);border-radius:24px;padding:55px 40px;max-width:850px;margin:0 auto;  border:1px solid rgba(192,107,134,.18);box-shadow:0 15px 40px rgba(192,107,134,.12);}
+.insight-label{display:inline-block;background:rgba(255,255,255,.85);color:#c06b86;font-size:12px;font-weight:800;letter-spacing:.12em;padding:8px 16px;border-radius:999px;margin-bottom:25px;}
+.green-highlight{color:#3d8b62;font-weight:800;background:rgba(255,255,255,.8);padding:4px 12px;border-radius:12px;}
+.pink-text{color:#c06b86;font-weight:800;}
+.mini-line{margin-top:30px;font-size:14px;color:#6b7280;font-weight:600;letter-spacing:.05em;}
 
 .step{font-size:16px;color:#444;line-height:1.65;max-width:840px;margin:0;}
 .step.top{margin-bottom:6px;} .step.mid{margin:22px 0 6px;}
@@ -170,138 +175,65 @@ footer b{color:var(--ink);}
   <div class="reveal"><div class="badge">02 · The hunt</div>
     <h2>We tested four things everyone believes help</h2>
     <p class="lede">People have plenty of theories about what helps you match. Be more active. Earn
-      more. Fill out your profile. List the right interests. We tested all four, and here is what
-      happened.</p>
+      more. Fill out your profile. List the right interests. We tested all four assumptions and built an interactive dashboard
+      where you can explore the results yourself.</p>
   </div>
 </section>
-
-<!-- Advantage 1 -->
-<section class="section" style="padding-top:20px;">
+<section class="section" style="padding-top:10px;">
   <div class="reveal card">
-    <div class="badge">Advantage 1 · App usage · Chelsea Fan</div>
-    <h2 style="font-size:23px;">Does more time on the app mean more matches?</h2>
-    <p class="step top">The thinking is simple: the more you swipe, the more chances you get, so heavy
-      users should match more. We compared match rate across usage levels, from light users to the
-      most active.</p>
-    <div class="viz">
-      <tableau-viz src="https://public.tableau.com/views/EDA_17830364716970/Dashboard1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link"
-        toolbar="bottom" hide-tabs style="width:100%;height:520px;"></tableau-viz>
-    </div>
-    <span class="flat">Result: flat · ~21–22% across every usage tier</span>
-  </div>
-</section>
 
-<!-- Advantage 2 -->
-<section class="section" style="padding-top:20px;">
-  <div class="reveal card">
-    <div class="badge">Advantage 2 · Income · Curtis Chau</div>
+    <div class="viz filled" style="margin-top:20px; min-height:900px;">
 
-    <h2 style="font-size:23px;">Do higher-income users match more?</h2>
-
-    <p class="step top">
-      A common assumption is that higher income signals status and gives you an edge.
-      We broke match rate down by income bracket, then split it by gender to check for
-      any hidden differences.
-    </p>
-
-    <!-- Visualization 1: Income vs Match Rate -->
-    <div class="viz filled">
       <tableau-viz
-      src = "https://public.tableau.com/views/Datasci209Final_Vis1/IncomevsMatchRate?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link"
-      toolbar="bottom"
-        hide-tabs
-        style="width:100%;height:520px;">
-      </tableau-viz>
-    </div>
-
-    <!-- Visualization 2: Income vs Match Rate by Gender -->
-    <div class="viz filled" style="margin-top:18px;">
-      <tableau-viz
-        src="https://public.tableau.com/views/Datasci209Final_Vis2/IncomevsMatchRateGender?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link"
-        hide-tabs
-        style="width:100%;height:520px;">
-      </tableau-viz>
-    </div>
-
-    <!-- Visualization 3: Income vs Match Rate Heatmap -->
-    <div class="viz filled" style="margin-top:18px;">
-      <tableau-viz
-        src="https://public.tableau.com/views/Datasci209Final_Vis3/IncomevsMatchRateHeatmap?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link"
+        src="https://public.tableau.com/views/Dashboards_17839764450360/Dashboard"
         toolbar="bottom"
         hide-tabs
-        style="width:100%;height:520px;">
+        style="width:100%;height:900px;">
       </tableau-viz>
+
     </div>
 
-    <span class="flat">Result: flat · no clear income trend</span>
-  </div>
-</section>
-
-<!-- Advantage 3 -->
-<section class="section" style="padding-top:20px;">
-  <div class="reveal card">
-    <div class="badge">Advantage 3 · Profile completeness · Chris White</div>
-
-    <h2 style="font-size:23px;">Do more photos and longer bios win more attention?</h2>
-
-    <p class="step top">
-      Every app tells you to add more photos and write a fuller bio. We tested
-      whether a more complete profile actually earns more likes and a better match rate.
-    </p>
-
-    <div class="viz filled" style="margin-top:14px; min-height:850px; overflow:visible;">
-      <tableau-viz 
-        src="https://public.tableau.com/views/EDA_17836143198120/Dashboard2"
-        toolbar="bottom"
-        hide-tabs
-        style="width:100%; height:850px;">
-      </tableau-viz>
-    </div>
 
     <span class="flat">
-      Result: mostly flat · profile completeness alone does not strongly increase match rate
+      Explore the data: filter cohorts and compare what actually changes match outcomes
     </span>
+
   </div>
 </section>
 
-<!-- Advantage 4 · Interests (stacked, with step-by-step prose) -->
-<section class="section" style="padding-top:20px;">
-  <div class="reveal card">
-    <div class="badge">Advantage 4 · Interests · Sam Kim</div>
-    <h2 style="font-size:23px;">Do a user's interests predict how well they match?</h2>
-    <p class="step top">The last theory is that your interests say something about how well you'll
-      match, that certain hobbies simply do better than others. We started by ranking all 49 interests
-      by their average match rate.</p>
-
-    <div class="viz filled" style="margin-top:14px;">
-      <tableau-viz src="https://public.tableau.com/views/ExploratoryDataAnalysis_17833753043410/Visual1"
-        toolbar="bottom" hide-tabs style="width:100%;height:840px;"></tableau-viz>
-    </div>
-
-    <p class="step mid">At first glance this looks like a real ranking, with Stand-up Comedy on top and
-      the rest sliding down from there. But look at the numbers: the whole list sits between about 21%
-      and 23%, so the gaps are tiny.</p>
-    <p class="step">To make the comparison easier to read, we grouped the 49 interests into 7 broader
-      categories like Arts &amp; Creative and Sports &amp; Outdoors. Each group holds thousands of
-      users, which makes the averages more stable, and then we plotted the full distribution for each
-      one instead of a single average.</p>
-
-    <div class="viz filled" style="margin-top:14px;">
-      <tableau-viz src="https://public.tableau.com/views/ExploratoryDataAnalysis_17833753043410/Sheet3"
-        toolbar="bottom" hide-tabs style="width:100%;height:620px;"></tableau-viz>
-    </div>
-
-    <p class="step mid">Every category lands right on the overall average, and the spread inside each
-      group runs almost the entire range. The interest a user lists barely moves their match rate.</p>
-    <span class="flat">Result: flat · every category lands on 21.7%</span>
-  </div>
-</section>
 
 <!-- Tension beat -->
 <section class="section" style="text-align:center;">
+
   <div class="reveal">
-    <p class="big-quote">Four different "advantages." Four flat lines.<br>So why does <em>nothing</em> move it?</p>
+
+    <div class="insight-card">
+
+  <div class="insight-label">
+    THE SURPRISE
   </div>
+
+  <p class="big-quote">
+    Four different "advantages."
+    <br>
+    <span class="pink-text">Four different theories.</span>
+    <br><br>
+    Yet everything stays between
+    <br>
+    <span class="green-highlight">19–25% success rate.</span>
+    <br>
+    <br>
+    So why does <span class="pink-text">nothing</span> change it?
+  </p>
+
+  <div class="mini-line">
+    Activity • Income • Profile • Interests
+  </div>
+
+</div>
+
+  </div>
+
 </section>
 
 <!-- ================= 3 · THE REVEAL ================= -->
