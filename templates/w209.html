@@ -26,13 +26,13 @@ body{margin:0;font-family:"Inter",sans-serif;background:var(--bg);color:var(--in
 #progress{position:fixed;top:0;left:0;height:4px;width:0;z-index:50;
   background:linear-gradient(90deg,#6bbf8f,#c06b86);transition:width .1s;}
 
-.section{max-width:1080px;margin:0 auto;padding:90px 32px;}
+.section{max-width:1240px;margin:0 auto;padding:56px 32px;}
 .snap-page{min-height:100vh;display:flex;flex-direction:column;justify-content:center;
   scroll-snap-align:start;scroll-snap-stop:always;padding-top:48px;padding-bottom:48px;}
 .badge{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:var(--pink);margin-bottom:12px;}
 h2{font-size:30px;font-weight:700;margin:0 0 14px;line-height:1.2;}
-.lede{font-size:18px;color:#444;line-height:1.65;max-width:840px;}
+.lede{font-size:18px;color:#444;line-height:1.65;max-width:980px;}
 .muted{color:var(--muted);}
 
 .reveal{opacity:0;transform:translateY(34px);
@@ -178,32 +178,24 @@ footer b{color:var(--ink);}
       more. Fill out your profile. List the right interests. We tested all four assumptions and built an interactive dashboard
       where you can explore the results yourself.</p>
   </div>
-</section>
-<section class="section" style="padding-top:10px;">
-  <div class="reveal card">
-
-    <div class="viz filled" style="margin-top:20px; min-height:900px;">
-
+  <div class="reveal card" style="margin-top:20px;">
+    <div class="viz filled" style="min-height:900px;">
       <tableau-viz
         src="https://public.tableau.com/views/Dashboards_17839764450360/Dashboard"
         toolbar="bottom"
         hide-tabs
         style="width:100%;height:900px;">
       </tableau-viz>
-
     </div>
-
-
     <span class="flat">
       Explore the data: filter cohorts and compare what actually changes match outcomes
     </span>
-
   </div>
 </section>
 
 
 <!-- Tension beat -->
-<section class="section" style="text-align:center;">
+<section class="section snap-page" style="text-align:center;">
 
   <div class="reveal">
 
@@ -255,55 +247,43 @@ footer b{color:var(--ink);}
       means someone got more likes, not that they did worse. (The very first group is low only because
       you can't match with more people than liked you.)</div>
   </div>
-</section>
-
-<!-- ================= 4 · THE LESSON ================= -->
-<section class="section">
-  <div class="reveal"><div class="badge">04 · What it means</div>
-    <h2>A caution for anyone who builds with metrics</h2>
-    <p class="lede">A product manager who optimizes for match rate would be pushing users toward
-      getting <em>fewer</em> likes, which is exactly backwards. So match rate probably is not a metric
-      to trust on its own. As a next step, we want to look into other measures of success, like the
-      raw number of matches or the full swipe-to-like-to-match funnel, and test whether any of them
-      tell a clearer story than match rate does.</p>
+  <div class="reveal d2" style="margin-top:28px;">
+    <p class="lede">So a product manager who optimizes for match rate would be pushing users toward
+      getting <em>fewer</em> likes, which is exactly backwards. Match rate probably is not a metric to
+      trust on its own. As a next step, we want to look into other measures of success, like the raw
+      number of matches or the full swipe-to-like-to-match funnel, and test whether any of them tell a
+      clearer story than match rate does.</p>
     <div class="turn"><strong>Takeaway for PMs:</strong> a metric can quietly point you the wrong way.
       Before you optimize for one, make sure it is really tracking the success you care about.</div>
   </div>
 </section>
 
-<!-- ================= 5 · RIGOR CHECK (interactive) ================= -->
+<!-- ================= 4 · RIGOR CHECK (interactive) ================= -->
 <style>
-.fx-card{background:#fff;border:1px solid #eef0f2;border-radius:18px;padding:26px;
-  box-shadow:0 10px 30px rgba(0,0,0,.05);margin-top:16px;}
+.fx-card{background:#fff;border:1px solid #eef0f2;border-radius:18px;padding:26px;box-shadow:0 10px 30px rgba(0,0,0,.05);margin-top:16px;}
 .fx-controls{display:flex;gap:22px;flex-wrap:wrap;justify-content:center;margin-bottom:20px;}
 .fx-controls label{font-size:13px;font-weight:600;color:#6b7280;display:flex;flex-direction:column;gap:6px;text-align:center;}
+.fx-controls select{font-family:inherit;font-size:15px;color:#2f2f2f;padding:9px 12px;border:1px solid #e3e8ee;border-radius:10px;background:#fbfbfb;min-width:220px;cursor:pointer;}
 .fx-title{font-size:20px;font-weight:700;color:#8a2a49;text-align:center;margin:0 0 5px;}
 .fx-sub{font-size:13.5px;color:#6b7280;text-align:center;line-height:1.5;margin:0 auto 18px;max-width:620px;}
-.fx-head{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;font-size:11.5px;color:#9ca3af;
-  font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;}
+.fx-head{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;font-size:11.5px;color:#9ca3af;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;}
 .fx-head .h1{text-align:right;}
-.fx-controls select{font-family:inherit;font-size:15px;color:#2f2f2f;padding:9px 12px;
-  border:1px solid #e3e8ee;border-radius:10px;background:#fbfbfb;min-width:220px;cursor:pointer;}
+.fx-plot{position:relative;}
+.fx-gridlines{position:absolute;top:0;bottom:0;left:162px;right:104px;pointer-events:none;background-image:linear-gradient(90deg,#e9edf1 1px,transparent 1px);background-size:25% 100%;border-right:1px solid #e9edf1;}
 .fx-row{display:grid;grid-template-columns:150px 1fr 92px;align-items:center;gap:12px;margin:9px 0;}
 .fx-lab{font-size:14px;color:#444;text-align:right;}
-.fx-plot{position:relative;}
-.fx-gridlines{position:absolute;top:0;bottom:0;left:162px;right:104px;pointer-events:none;
-  background-image:linear-gradient(90deg,#e9edf1 1px,transparent 1px);background-size:25% 100%;border-right:1px solid #e9edf1;}
 .fx-track{position:relative;background:transparent;border-radius:5px;height:24px;overflow:hidden;}
 .fx-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,#eb8fb4,#c0567f);transition:width .5s ease;}
+.fx-val{font-size:13.5px;color:#6b7280;font-weight:600;}
 .fx-scale{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;margin-top:8px;}
 .fx-ticks{display:flex;justify-content:space-between;font-size:11px;color:#9ca3af;}
 .fx-note{font-size:11.5px;color:#9ca3af;text-align:right;margin-top:4px;}
-.fx-val{font-size:13.5px;color:#6b7280;font-weight:600;}
-.fx-axis{font-size:12px;color:#9ca3af;text-align:right;margin-top:6px;}
-.fx-spread{margin-top:18px;padding:14px 18px;background:#fdeef4;border-left:4px solid #c0567f;
-  border-radius:0 12px 12px 0;font-size:15px;color:#8a2a49;line-height:1.6;}
+.fx-spread{margin-top:18px;padding:14px 18px;background:#fdeef4;border-left:4px solid #c0567f;border-radius:0 12px 12px 0;font-size:15px;color:#8a2a49;line-height:1.6;}
 .fx-spread b{color:#6e1f39;}
-@media(max-width:600px){.fx-row,.fx-head,.fx-scale{grid-template-columns:96px 1fr 72px;}
-  .fx-gridlines{left:108px;right:84px;}.fx-controls select{min-width:150px;}}
+@media(max-width:600px){.fx-row,.fx-head,.fx-scale{grid-template-columns:96px 1fr 72px;}.fx-gridlines{left:108px;right:84px;}.fx-controls select{min-width:150px;}}
 </style>
 <section class="section">
-  <div class="reveal"><div class="badge">05 · The rigor check</div>
+  <div class="reveal"><div class="badge">04 · The rigor check</div>
     <h2>It isn't just match rate. Nothing moves.</h2>
     <p class="lede">Match rate isn't the only outcome we looked at. Pick any outcome, and any way to
       group users. The bars barely budge, because none of these outcomes is predicted by who someone
@@ -316,7 +296,7 @@ footer b{color:var(--ink);}
           <option value="match_rate">Match rate (%)</option>
           <option value="likes_received">Likes received</option>
           <option value="mutual_matches">Mutual matches</option>
-          <option value="swipe_right_ratio">Swipe-right ratio</option>
+          <option value="swipe_right_ratio">Swipe-right rate</option>
           <option value="app_usage_time_min">App usage (minutes)</option>
         </select>
       </label>
@@ -353,16 +333,11 @@ const FX_CFG={
  swipe_right_ratio:{mult:100,max:70,dec:0,suf:"%",noun:"swipe-right rate",gapUnit:"percentage points",expl:"Swipe-right rate is how often a user swipes right on other people."},
  app_usage_time_min:{mult:1,max:200,dec:0,suf:" min",noun:"app usage",gapUnit:"minutes",expl:"App usage is how many minutes a user spends on the app."}};
 const FX_DIM={gender:{title:"gender",word:"gender"},age_group:{title:"age group",word:"age"},income_bracket:{title:"income bracket",word:"income"},relationship_intent:{title:"relationship intent",word:"relationship-intent"}};
-const FX_ORDER={gender:["Female","Male","Non-binary","Genderfluid","Transgender","Prefer Not to Say"],
- age_group:["18–24","25–34","35–44","45–54","55+"],
- income_bracket:["Very Low","Low","Lower-Middle","Middle","Upper-Middle","High","Very High"],
- relationship_intent:["Serious Relationship","Casual Dating","Exploring","Hookups","Friends Only","Networking"]};
+const FX_ORDER={gender:["Female","Male","Non-binary","Genderfluid","Transgender","Prefer Not to Say"],age_group:["18–24","25–34","35–44","45–54","55+"],income_bracket:["Very Low","Low","Lower-Middle","Middle","Upper-Middle","High","Very High"],relationship_intent:["Serious Relationship","Casual Dating","Exploring","Hookups","Friends Only","Networking"]};
 function fxRender(){
  var o=document.getElementById('fxOut').value,d=document.getElementById('fxDim').value,cfg=FX_CFG[o],dim=FX_DIM[d];
- var rows=FX_DATA[o][d],order=FX_ORDER[d].filter(function(k){return k in rows;});
- var html="",vals=[],items=[];
- order.forEach(function(k){var v=rows[k]*cfg.mult;vals.push(v);items.push([k,v]);var w=Math.min(100,v/cfg.max*100);
-  html+='<div class="fx-row"><div class="fx-lab">'+k+'</div><div class="fx-track"><div class="fx-fill" style="width:'+w+'%"></div></div><div class="fx-val">'+v.toFixed(cfg.dec)+cfg.suf+'</div></div>';});
+ var rows=FX_DATA[o][d],order=FX_ORDER[d].filter(function(k){return k in rows;}),html="",vals=[],items=[];
+ order.forEach(function(k){var v=rows[k]*cfg.mult;vals.push(v);items.push([k,v]);var w=Math.min(100,v/cfg.max*100);html+='<div class="fx-row"><div class="fx-lab">'+k+'</div><div class="fx-track"><div class="fx-fill" style="width:'+w+'%"></div></div><div class="fx-val">'+v.toFixed(cfg.dec)+cfg.suf+'</div></div>';});
  document.getElementById('fxBars').innerHTML=html;
  document.getElementById('fxTitle').textContent='Average '+cfg.noun+', by '+dim.title;
  document.getElementById('fxSub').textContent=cfg.expl+' Each bar is that group’s average.';
@@ -382,20 +357,19 @@ fxRender();
   <b>DATASCI 209 · Summer 2026 · Group C</b><br>
   Chelsea Fan · Curtis Chau · Sam Kim · Chris White<br>
   Built for dating-app product managers, to see which user behaviors actually drive matches.<br>
-  Data: Kaggle "Dating App Behavior" dataset · Feedback: samkim1125@gmail.com
+  Data: Kaggle "Dating App Behavior" dataset
 </footer>
 
 <script>
 const prog=document.getElementById('progress');
-addEventListener('scroll',()=>{
-  const h=document.documentElement;
-  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
-  prog.style.width=pct+'%';
+addEventListener('scroll',function(){
+  var h=document.documentElement;
+  prog.style.width=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100+'%';
 });
-const io=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+var io=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
 },{threshold:.15});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
 </script>
 </body>
 </html>
