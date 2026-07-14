@@ -31,8 +31,8 @@ body{margin:0;font-family:"Inter",sans-serif;background:var(--bg);color:var(--in
   scroll-snap-align:start;scroll-snap-stop:always;padding-top:48px;padding-bottom:48px;}
 .badge{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:var(--pink);margin-bottom:12px;}
-h2{font-size:30px;font-weight:700;margin:0 0 14px;line-height:1.2;}
-.lede{font-size:18px;color:#444;line-height:1.65;max-width:980px;}
+h2{font-size:26px;font-weight:700;margin:0 0 14px;line-height:1.2;}
+.lede{font-size:16.5px;color:#444;line-height:1.65;max-width:980px;}
 .muted{color:var(--muted);}
 
 .reveal{opacity:0;transform:translateY(34px);
@@ -90,7 +90,7 @@ h2{font-size:30px;font-weight:700;margin:0 0 14px;line-height:1.2;}
 .bar-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#8fd6ab,#3d8b62);}
 .bar-row .val{font-size:12.5px;color:var(--muted);}
 
-.reveal-img{width:100%;border-radius:14px;border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.06);margin-top:8px;}
+.reveal-img{width:100%;max-width:820px;margin-left:auto;margin-right:auto;display:block;border-radius:14px;border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.06);margin-top:8px;}
 .big-quote{font-size:34px;font-weight:750;line-height:1.35;color:#3d8b62;margin:0;}
 .insight-card{background:linear-gradient(135deg,#c7f9cc,#ffd6e0);border-radius:24px;padding:55px 40px;max-width:850px;margin:0 auto;  border:1px solid rgba(192,107,134,.18);box-shadow:0 15px 40px rgba(192,107,134,.12);}
 .insight-label{display:inline-block;background:rgba(255,255,255,.85);color:#c06b86;font-size:12px;font-weight:800;letter-spacing:.12em;padding:8px 16px;border-radius:999px;margin-bottom:25px;}
@@ -179,12 +179,12 @@ footer b{color:var(--ink);}
       where you can explore the results yourself.</p>
   </div>
   <div class="reveal card" style="margin-top:20px;">
-    <div class="viz filled" style="min-height:900px;">
+    <div class="viz filled" style="min-height:700px;">
       <tableau-viz
         src="https://public.tableau.com/views/Dashboards_17839764450360/Dashboard"
         toolbar="bottom"
         hide-tabs
-        style="width:100%;height:900px;">
+        style="width:100%;height:700px;">
       </tableau-viz>
     </div>
     <span class="flat">
@@ -352,6 +352,23 @@ document.getElementById('fxOut').addEventListener('change',fxRender);
 document.getElementById('fxDim').addEventListener('change',fxRender);
 fxRender();
 </script>
+
+<!-- ================= 5 · CONCLUSION ================= -->
+<section class="section">
+  <div class="reveal"><div class="badge">05 · In conclusion</div>
+    <h2>Nothing predicts success here, and that is still useful</h2>
+    <p class="lede">Across every trait we grouped by and every outcome we measured, nothing in this
+      dataset predicts who succeeds on the app. A lot of that comes down to the data being synthetic,
+      so there was never a real signal waiting to be found.</p>
+    <div class="reveal d1" style="background:#eaf6ef;border-left:4px solid #3d8b62;padding:18px 22px;border-radius:0 14px 14px 0;margin-top:18px;color:#2f6f4e;font-size:16px;line-height:1.65;max-width:980px;">
+      The value isn’t the answer, it’s the setup. Everything on this page, the metric check, the
+      interactive explorer, and the funnel view, is a ready-made scaffold. Pointed at real dating-app
+      data, a product manager could quickly see which levers actually move matches, which groups of
+      users behave differently, and whether the metric they report on is tracking real success or just
+      an illusion. We built the lens. Real data would fill in the picture.
+    </div>
+  </div>
+</section>
 
 <footer>
   <b>DATASCI 209 · Summer 2026 · Group C</b><br>
