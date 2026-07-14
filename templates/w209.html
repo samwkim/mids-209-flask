@@ -271,6 +271,113 @@ footer b{color:var(--ink);}
   </div>
 </section>
 
+<!-- ================= 5 · RIGOR CHECK (interactive) ================= -->
+<style>
+.fx-card{background:#fff;border:1px solid #eef0f2;border-radius:18px;padding:26px;
+  box-shadow:0 10px 30px rgba(0,0,0,.05);margin-top:16px;}
+.fx-controls{display:flex;gap:22px;flex-wrap:wrap;justify-content:center;margin-bottom:20px;}
+.fx-controls label{font-size:13px;font-weight:600;color:#6b7280;display:flex;flex-direction:column;gap:6px;text-align:center;}
+.fx-title{font-size:20px;font-weight:700;color:#8a2a49;text-align:center;margin:0 0 5px;}
+.fx-sub{font-size:13.5px;color:#6b7280;text-align:center;line-height:1.5;margin:0 auto 18px;max-width:620px;}
+.fx-head{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;font-size:11.5px;color:#9ca3af;
+  font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;}
+.fx-head .h1{text-align:right;}
+.fx-controls select{font-family:inherit;font-size:15px;color:#2f2f2f;padding:9px 12px;
+  border:1px solid #e3e8ee;border-radius:10px;background:#fbfbfb;min-width:220px;cursor:pointer;}
+.fx-row{display:grid;grid-template-columns:150px 1fr 92px;align-items:center;gap:12px;margin:9px 0;}
+.fx-lab{font-size:14px;color:#444;text-align:right;}
+.fx-plot{position:relative;}
+.fx-gridlines{position:absolute;top:0;bottom:0;left:162px;right:104px;pointer-events:none;
+  background-image:linear-gradient(90deg,#e9edf1 1px,transparent 1px);background-size:25% 100%;border-right:1px solid #e9edf1;}
+.fx-track{position:relative;background:transparent;border-radius:5px;height:24px;overflow:hidden;}
+.fx-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,#eb8fb4,#c0567f);transition:width .5s ease;}
+.fx-scale{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;margin-top:8px;}
+.fx-ticks{display:flex;justify-content:space-between;font-size:11px;color:#9ca3af;}
+.fx-note{font-size:11.5px;color:#9ca3af;text-align:right;margin-top:4px;}
+.fx-val{font-size:13.5px;color:#6b7280;font-weight:600;}
+.fx-axis{font-size:12px;color:#9ca3af;text-align:right;margin-top:6px;}
+.fx-spread{margin-top:18px;padding:14px 18px;background:#fdeef4;border-left:4px solid #c0567f;
+  border-radius:0 12px 12px 0;font-size:15px;color:#8a2a49;line-height:1.6;}
+.fx-spread b{color:#6e1f39;}
+@media(max-width:600px){.fx-row,.fx-head,.fx-scale{grid-template-columns:96px 1fr 72px;}
+  .fx-gridlines{left:108px;right:84px;}.fx-controls select{min-width:150px;}}
+</style>
+<section class="section">
+  <div class="reveal"><div class="badge">05 · The rigor check</div>
+    <h2>It isn't just match rate. Nothing moves.</h2>
+    <p class="lede">Match rate isn't the only outcome we looked at. Pick any outcome, and any way to
+      group users. The bars barely budge, because none of these outcomes is predicted by who someone
+      is. Try it yourself.</p>
+  </div>
+  <div class="reveal d1 fx-card">
+    <div class="fx-controls">
+      <label>Outcome
+        <select id="fxOut">
+          <option value="match_rate">Match rate (%)</option>
+          <option value="likes_received">Likes received</option>
+          <option value="mutual_matches">Mutual matches</option>
+          <option value="swipe_right_ratio">Swipe-right ratio</option>
+          <option value="app_usage_time_min">App usage (minutes)</option>
+        </select>
+      </label>
+      <label>Group users by
+        <select id="fxDim">
+          <option value="gender">Gender</option>
+          <option value="age_group">Age group</option>
+          <option value="income_bracket">Income bracket</option>
+          <option value="relationship_intent">Relationship intent</option>
+        </select>
+      </label>
+    </div>
+    <div class="fx-title" id="fxTitle"></div>
+    <div class="fx-sub" id="fxSub"></div>
+    <div class="fx-head"><span class="h1">Group</span><span></span><span>Average</span></div>
+    <div class="fx-plot"><div class="fx-gridlines"></div><div id="fxBars"></div></div>
+    <div class="fx-scale"><span></span><div class="fx-ticks" id="fxTicks"></div><span></span></div>
+    <div class="fx-note" id="fxNote"></div>
+    <div class="fx-spread" id="fxSpread"></div>
+  </div>
+</section>
+<script>
+const FX_DATA={
+ match_rate:{gender:{Female:21.815,Male:21.91,"Non-binary":21.678,Genderfluid:21.848,Transgender:21.344,"Prefer Not to Say":21.698},age_group:{"18–24":21.576,"25–34":21.783,"35–44":21.748,"45–54":21.604,"55+":21.928},income_bracket:{"Very Low":21.713,Low:21.404,"Lower-Middle":21.877,Middle:21.202,"Upper-Middle":21.755,High:22.019,"Very High":22.026},relationship_intent:{"Serious Relationship":21.549,"Casual Dating":21.59,Exploring:21.55,Hookups:21.919,"Friends Only":22.03,Networking:21.66}},
+ likes_received:{gender:{Female:99.528,Male:98.911,"Non-binary":99.679,Genderfluid:99.634,Transgender:100.614,"Prefer Not to Say":98.782},age_group:{"18–24":99.905,"25–34":99.181,"35–44":100.092,"45–54":99.631,"55+":98.36},income_bracket:{"Very Low":99.68,Low:100.354,"Lower-Middle":98.553,Middle:100.332,"Upper-Middle":99.473,High:98.31,"Very High":100.007},relationship_intent:{"Serious Relationship":100.138,"Casual Dating":99.008,Exploring:100.325,Hookups:98.436,"Friends Only":99.486,Networking:99.731}},
+ mutual_matches:{gender:{Female:13.882,Male:13.824,"Non-binary":13.894,Genderfluid:13.96,Transgender:13.944,"Prefer Not to Say":13.717},age_group:{"18–24":13.887,"25–34":13.899,"35–44":13.792,"45–54":13.883,"55+":13.919},income_bracket:{"Very Low":13.83,Low:13.952,"Lower-Middle":13.811,Middle:13.754,"Upper-Middle":14.017,High:13.759,"Very High":13.972},relationship_intent:{"Serious Relationship":13.976,"Casual Dating":13.787,Exploring:13.859,Hookups:13.834,"Friends Only":13.919,Networking:13.845}},
+ swipe_right_ratio:{gender:{Female:0.5,Male:0.501,"Non-binary":0.499,Genderfluid:0.5,Transgender:0.5,"Prefer Not to Say":0.503},age_group:{"18–24":0.498,"25–34":0.502,"35–44":0.5,"45–54":0.502,"55+":0.502},income_bracket:{"Very Low":0.496,Low:0.503,"Lower-Middle":0.5,Middle:0.503,"Upper-Middle":0.497,High:0.503,"Very High":0.501},relationship_intent:{"Serious Relationship":0.5,"Casual Dating":0.5,Exploring:0.498,Hookups:0.506,"Friends Only":0.502,Networking:0.498}},
+ app_usage_time_min:{gender:{Female:152.056,Male:148.967,"Non-binary":149.936,Genderfluid:150.316,Transgender:149.263,"Prefer Not to Say":148.918},age_group:{"18–24":150.816,"25–34":150.398,"35–44":150.096,"45–54":149.034,"55+":149.057},income_bracket:{"Very Low":150.879,Low:149.884,"Lower-Middle":148.863,Middle:150.836,"Upper-Middle":148.049,High:150.844,"Very High":150.002},relationship_intent:{"Serious Relationship":150.546,"Casual Dating":150.292,Exploring:150.157,Hookups:149.916,"Friends Only":149.499,Networking:149.053}}
+};
+const FX_CFG={
+ match_rate:{mult:1,max:30,dec:1,suf:"%",noun:"match rate",gapUnit:"percentage points",expl:"Match rate is the share of someone’s likes that turned into mutual matches."},
+ likes_received:{mult:1,max:130,dec:0,suf:"",noun:"likes received",gapUnit:"likes",expl:"Likes received is how many likes each user got."},
+ mutual_matches:{mult:1,max:20,dec:1,suf:"",noun:"mutual matches",gapUnit:"matches",expl:"Mutual matches is how many two-way matches each user got."},
+ swipe_right_ratio:{mult:100,max:70,dec:0,suf:"%",noun:"swipe-right rate",gapUnit:"percentage points",expl:"Swipe-right rate is how often a user swipes right on other people."},
+ app_usage_time_min:{mult:1,max:200,dec:0,suf:" min",noun:"app usage",gapUnit:"minutes",expl:"App usage is how many minutes a user spends on the app."}};
+const FX_DIM={gender:{title:"gender",word:"gender"},age_group:{title:"age group",word:"age"},income_bracket:{title:"income bracket",word:"income"},relationship_intent:{title:"relationship intent",word:"relationship-intent"}};
+const FX_ORDER={gender:["Female","Male","Non-binary","Genderfluid","Transgender","Prefer Not to Say"],
+ age_group:["18–24","25–34","35–44","45–54","55+"],
+ income_bracket:["Very Low","Low","Lower-Middle","Middle","Upper-Middle","High","Very High"],
+ relationship_intent:["Serious Relationship","Casual Dating","Exploring","Hookups","Friends Only","Networking"]};
+function fxRender(){
+ var o=document.getElementById('fxOut').value,d=document.getElementById('fxDim').value,cfg=FX_CFG[o],dim=FX_DIM[d];
+ var rows=FX_DATA[o][d],order=FX_ORDER[d].filter(function(k){return k in rows;});
+ var html="",vals=[],items=[];
+ order.forEach(function(k){var v=rows[k]*cfg.mult;vals.push(v);items.push([k,v]);var w=Math.min(100,v/cfg.max*100);
+  html+='<div class="fx-row"><div class="fx-lab">'+k+'</div><div class="fx-track"><div class="fx-fill" style="width:'+w+'%"></div></div><div class="fx-val">'+v.toFixed(cfg.dec)+cfg.suf+'</div></div>';});
+ document.getElementById('fxBars').innerHTML=html;
+ document.getElementById('fxTitle').textContent='Average '+cfg.noun+', by '+dim.title;
+ document.getElementById('fxSub').textContent=cfg.expl+' Each bar is that group’s average.';
+ var ticks=[0,.25,.5,.75,1].map(function(f){return Math.round(cfg.max*f)+cfg.suf;});
+ document.getElementById('fxTicks').innerHTML=ticks.map(function(t){return '<span>'+t+'</span>';}).join('');
+ document.getElementById('fxNote').textContent='Averages shown on a zero-based scale, so the flatness is real, not a zoomed-in axis.';
+ var lo=items.slice().sort(function(a,b){return a[1]-b[1];})[0],hi=items.slice().sort(function(a,b){return b[1]-a[1];})[0];
+ var mean=vals.reduce(function(a,b){return a+b;},0)/vals.length,gap=hi[1]-lo[1],pct=gap/mean*100;
+ document.getElementById('fxSpread').innerHTML='Across the '+order.length+' '+dim.word+' groups, the average '+cfg.noun+' runs from <b>'+lo[1].toFixed(cfg.dec)+cfg.suf+'</b> ('+lo[0]+') up to <b>'+hi[1].toFixed(cfg.dec)+cfg.suf+'</b> ('+hi[0]+'). That is a gap of just <b>'+gap.toFixed(cfg.dec)+' '+cfg.gapUnit+'</b>, only <b>'+pct.toFixed(1)+'%</b> of the average. So '+dim.word+' barely changes '+cfg.noun+'.';
+}
+document.getElementById('fxOut').addEventListener('change',fxRender);
+document.getElementById('fxDim').addEventListener('change',fxRender);
+fxRender();
+</script>
+
 <footer>
   <b>DATASCI 209 · Summer 2026 · Group C</b><br>
   Chelsea Fan · Curtis Chau · Sam Kim · Chris White<br>
